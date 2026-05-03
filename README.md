@@ -16,14 +16,6 @@ A sleek, modern, single-page developer portfolio built using HTML, CSS, and Vani
 - **CSS3:** Custom CSS variables, Grid/Flexbox layouts, hover transitions, and responsive media queries.
 - **JavaScript (Vanilla):** DOM manipulation, event listeners, and Intersection Observer logic.
 
-## 📂 Featured Projects
-
-The portfolio highlights several of my core projects:
-- **CineQueue:** A dynamic movie discovery platform built with the OMDb API and LocalStorage.
-- **FailSafe Email Trigger:** A lightweight dead man’s switch built using Google Apps Script.
-- **NutriCalc AI Backend:** A serverless API built on Cloudflare Workers utilizing the Gemini 2.0 Flash model for nutrition calculations.
-- **Resume Analyzer:** An AI-powered client-side utility leveraging the Gemini API to extract key candidate information from documents.
-
 ## 💻 How to Run Locally
 
 Since this project is built entirely with plain HTML, CSS, and JS (no complex build tools or frameworks required), running it is incredibly simple:
