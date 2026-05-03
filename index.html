@@ -662,68 +662,6 @@
             <h2 class="section-title">Featured <span>Projects</span></h2>
             <div class="projects-grid">
                 
-                <!-- CineQueue -->
-                <div class="project-card hidden">
-                    <div class="project-header">
-                        <i class="far fa-folder-open folder-icon"></i>
-                        <div class="project-links">
-                            <a href="https://github.com/maheshmnair/CineQueue" target="_blank"><i class="fab fa-github"></i></a>
-                            <a href="https://maheshmnair.github.io/CineQueue/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    </div>
-                    <h3 class="project-title">CineQueue</h3>
-                    <p class="project-desc">A dynamic movie discovery platform built with the OMDb API. Features an intuitive search UI and a localized favorites Watchlist utilizing browser LocalStorage.</p>
-                    <div class="project-tech">
-                        <span>HTML</span><span>CSS</span><span>JavaScript</span><span>REST API</span>
-                    </div>
-                </div>
-
-                <!-- FailSafeEmailTrigger -->
-                <div class="project-card hidden">
-                    <div class="project-header">
-                        <i class="far fa-folder-open folder-icon"></i>
-                        <div class="project-links">
-                            <a href="https://github.com/maheshmnair" target="_blank"><i class="fab fa-github"></i></a>
-                        </div>
-                    </div>
-                    <h3 class="project-title">FailSafe Email Trigger</h3>
-                    <p class="project-desc">A lightweight dead man’s switch built with Google Apps Script. Sends daily check-ins and triggers emergency alerts (with optional PDF attachments) upon consecutive non-responses.</p>
-                    <div class="project-tech">
-                        <span>Google Apps Script</span><span>JavaScript</span>
-                    </div>
-                </div>
-
-                <!-- NutriCalcAI -->
-                <div class="project-card hidden">
-                    <div class="project-header">
-                        <i class="far fa-folder-open folder-icon"></i>
-                        <div class="project-links">
-                            <a href="https://github.com/maheshmnair" target="_blank"><i class="fab fa-github"></i></a>
-                            <a href="https://maheshmnair.github.io/NutriCalc/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    </div>
-                    <h3 class="project-title">NutriCalc AI Backend</h3>
-                    <p class="project-desc">A serverless API built on Cloudflare Workers that uses the Gemini 2.0 Flash model to automatically calculate and format the exact nutritional values of requested food items.</p>
-                    <div class="project-tech">
-                        <span>Cloudflare Workers</span><span>Gemini API</span><span>JS</span>
-                    </div>
-                </div>
-
-                <!-- ResumeAnalyzer -->
-                <div class="project-card hidden">
-                    <div class="project-header">
-                        <i class="far fa-folder-open folder-icon"></i>
-                        <div class="project-links">
-                            <a href="https://github.com/maheshmnair" target="_blank"><i class="fab fa-github"></i></a>
-                        </div>
-                    </div>
-                    <h3 class="project-title">Resume Analyzer</h3>
-                    <p class="project-desc">An AI-powered client-side utility that reads uploaded document files (PDF/Docx) and leverages the Gemini API to extract and neatly tabulate key candidate information.</p>
-                    <div class="project-tech">
-                        <span>JavaScript</span><span>FileReader API</span><span>Gemini AI</span>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
@@ -836,6 +774,46 @@
                 nav.style.boxShadow = 'none';
             }
         });
+
+        // 4. Dynamically fetch remaining projects from GitHub API
+        async function fetchRemainingGitHubProjects() {
+            try {
+                const response = await fetch('https://api.github.com/users/maheshmnair/repos?sort=updated');
+                const repos = await response.json();
+                
+                // Repositories already hardcoded or to be ignored
+                const excludeRepos = ['maheshmnair.github.io'];
+                const projectsGrid = document.querySelector('.projects-grid');
+                
+                repos.forEach(repo => {
+                    if (!excludeRepos.includes(repo.name) && !repo.fork) {
+                        const card = document.createElement('div');
+                        card.className = 'project-card hidden';
+                        
+                        const languageHtml = repo.language ? `<span>${repo.language}</span>` : '';
+                        
+                        card.innerHTML = `
+                            <div class="project-header">
+                                <i class="far fa-folder-open folder-icon"></i>
+                                <div class="project-links">
+                                    <a href="${repo.html_url}" target="_blank"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                            <h3 class="project-title" style="text-transform: capitalize;">${repo.name.replace(/-/g, ' ')}</h3>
+                            <p class="project-desc">${repo.description || 'Check out my GitHub for more details on this project.'}</p>
+                            <div class="project-tech">${languageHtml}</div>
+                        `;
+                        
+                        projectsGrid.appendChild(card);
+                        observer.observe(card); // Ensure new cards get the scroll animation
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching GitHub repositories:', error);
+            }
+        }
+        
+        fetchRemainingGitHubProjects();
     </script>
 </body>
 </html>
