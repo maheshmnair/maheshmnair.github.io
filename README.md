@@ -22,7 +22,7 @@ Since this project is built entirely with plain HTML, CSS, and JS (no complex bu
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/maheshmnair/portfolio.git
+   git clone https://github.com/maheshmnair/maheshmnair.github.io.git
    ```
 2. Navigate to the project directory.
 3. Open `index.html` directly in your favorite web browser.
